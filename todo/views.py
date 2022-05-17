@@ -19,5 +19,9 @@ class TodoViewSet(ModelViewSet):
         serializer.validated_data["user"]=self.request.user
         serializer.save()
 
+class UserListView(APIView):
 
+    def get(self, request):
+        queryset = get_user_model().objects.all()
+        return Response({"users": UserProfileSerializer(queryset, many=True).data}, status=status.HTTP_200_OK)
 
